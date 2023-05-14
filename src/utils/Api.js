@@ -45,18 +45,26 @@ export class Api {
     }).then((response) => this._checkError(response));
   }
 
-  addLike(id) {
-    const currentUrl = `${this._url}/cards/${id}/likes`;
-    return fetch(currentUrl, {
-      method: "PUT",
-      headers: this._headers,
-    }).then((response) => this._checkError(response));
-  }
+  // addLike(id) {
+  //   const currentUrl = `${this._url}/cards/${id}/likes`;
+  //   return fetch(currentUrl, {
+  //     method: "PUT",
+  //     headers: this._headers,
+  //   }).then((response) => this._checkError(response));
+  // }
 
-  deleteLike(id) {
+  // deleteLike(id) {
+  //   const currentUrl = `${this._url}/cards/${id}/likes`;
+  //   return fetch(currentUrl, {
+  //     method: "DELETE",
+  //     headers: this._headers,
+  //   }).then((response) => this._checkError(response));
+  // }
+
+  changeLikeCardStatus(id, isLiked) {
     const currentUrl = `${this._url}/cards/${id}/likes`;
     return fetch(currentUrl, {
-      method: "DELETE",
+      method: isLiked ? "PUT" : "DELETE",
       headers: this._headers,
     }).then((response) => this._checkError(response));
   }
