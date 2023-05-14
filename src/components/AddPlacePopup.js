@@ -1,16 +1,14 @@
 import { useState, useEffect } from "react";
 import PopupWithForm from "./PopupWithForm";
 
-function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
+function AddPlacePopup({ isOpen, onClose, onAddPlace, textButton }) {
   const [place, setPlace] = useState("");
   const [photo, setPhoto] = useState("");
-  const [textButton, setTextButton] = useState('Сохранить');
 
   useEffect(() => {
     if (isOpen) {
       setPlace("");
       setPhoto("");
-      setTextButton('Сохранить');
     }
   }, [isOpen]);
 
@@ -24,7 +22,6 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
 
   function handleSubmitNewPlace(e) {
     e.preventDefault();
-    setTextButton('Сохранение...');
     onAddPlace({ name: place, link: photo });
   }
 
@@ -34,7 +31,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
       onClose={onClose}
       name={"add"}
       title={"Новое место"}
-      textButton={textButton}
+      textButton={textButton ? "Сохранение..." : "Сохранить"}
       typeButton={"submit"}
       method={"post"}
       onSubmit={handleSubmitNewPlace}

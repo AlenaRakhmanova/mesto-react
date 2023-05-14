@@ -20,6 +20,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
   const [removingCard, setRemovingCard] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     api
@@ -73,6 +74,7 @@ function App() {
   }
 
   function handleUpdateUser(data) {
+    setIsLoading(true);
     api
       .setInfoUser(data)
       .then((newData) => {
@@ -81,10 +83,14 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }
 
   function handleUpdateAvatar(data) {
+    setIsLoading(true);
     api
       .updateAvatar(data)
       .then((newData) => {
@@ -93,10 +99,14 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }
 
   function handleAddPlaceSubmit(place) {
+    setIsLoading(true);
     api
       .addNewCard(place)
       .then((data) => {
@@ -105,6 +115,9 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }
 
@@ -145,7 +158,6 @@ function App() {
           onEditAvatar={handleEditAvatarClick}
           onCardClick={handleCardClick}
           onCardLike={handleCardLike}
-          // onCardDelete={handleCardDelete}
           onCardDelete={confirmDeleteCard}
           cards={cards}
         />
@@ -154,16 +166,19 @@ function App() {
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
+          textButton={isLoading}
         />
         <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
           onUpdateAvatar={handleUpdateAvatar}
+          textButton={isLoading}
         />
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
           onAddPlace={handleAddPlaceSubmit}
+          textButton={isLoading}
         />
         <ImagePopup onClose={closeAllPopups} card={selectedCard} isOpen={isCardImageOpen} />
         <ConfirmationPopup
